@@ -23,15 +23,17 @@ def make_table() -> list:
     print('—' * 105)
 
     for i in range(math.ceil((end_z - start_z) / step) + 1):  # ищем порядковые номера
+        change_sign = 0
         cur_z = start_z + step * i
         cur_z1 = p1(cur_z)  # Получаем значение функции p1 and p2
         cur_z2 = p2(cur_z)
 
-        if cur_z1 < 0:
+        if cur_z1 < 0:  # Если значение функции меньше 0, то рисуем ось x
             draw_p_axis = True
         if round(cur_z, 2) <= end_z:
             print(f'|{i + 1:^25.6g}|{cur_z:^25.6g}|{cur_z1:^25.6g}|{cur_z2:^25.6g}|')
             table.append((cur_z, cur_z1))
+        last = cur_z2
 
     print('—' * 105)
     return table
@@ -41,5 +43,5 @@ table = make_table()
 size = 120  # размер графика
 serifs = int(input('Введите количество засечек на оси Y (По умолчанию 8): ') or 8)
 
-if not (4 <= serifs <= 8): # проверка на колво засечек
+if not (4 <= serifs <= 8):  # проверка на колво засечек
     pass
