@@ -35,3 +35,5 @@ print(task1b(sp))
 
 def task2(sp):
     pass
+
+print()
