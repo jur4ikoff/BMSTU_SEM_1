@@ -74,9 +74,9 @@ size = 120  # размер графика
 serifs = int(input('Введите количество засечек на оси Y (По умолчанию 8): ') or 8)
 
 if not (4 <= serifs <= 8):  # проверка на колво засечек
-    pass
+    raise Exception('count of serifs must be in interval [4, 8]')
 
-# минимальный и максимальный элемент
+# минимальный и максимальный элемент значения функции
 maxx = max(table, key=lambda x: x[1])[1]
 minn = min(table, key=lambda x: x[1])[1]
 max_len_b = -1  # максимальная длина b
@@ -90,7 +90,7 @@ step_point = (maxx - minn) / (serifs - 1)  # дельта между засеч�
 scale = size / (maxx - minn)  # числовой шаг между засечками
 
 y_edge = 0  # граница y
-up_line = '  ' * (max_len_b)  # верхняя строка
+up_line = '  ' * (max_len_b - 1)  # верхняя строка
 for i in range(serifs):
     y_value = minn + step_point * i # находим значение y
     y_pos = round((y_value - minn) * scale) # ищем местонахождение значения на прямой
@@ -99,7 +99,7 @@ for i in range(serifs):
     y_edge = y_pos + len(y_value) + 1
 
 print(up_line)
-print("-" * (size + max_len_b + 4) + "> y")  # ось ординат
+print("—" * (size + max_len_b + 4) + "> y")  # ось ординат
 
 pos_b_axis = -2
 if draw_b_axis:
@@ -109,7 +109,7 @@ for b, y in table: # иттерируемся по таблице b, y
     b = format(b, ".6g")
     print(f"{b:>{max_len_b}}| ", end="")
     if not draw_b_axis: # если нет отрицательных y
-        y_pos = round(size * ((y - minn) / (maxx - minn)))
+        y_pos = round(size * ((y - minn) / (maxx - minn))) # позиция по y
         print(" " * (y_pos - 1) + "*")
     else:
         if y < 0:
