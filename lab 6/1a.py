@@ -8,4 +8,7 @@ print(sp)
 ind = int(input('Введите индекс элемента: '))
 elem = int(input('Введите значение элемента: '))
 sp.insert(ind, elem)
-print(sp)
+
+
+for i, val in enumerate(sp):
+    print(f"lst[{i}] = {val}")

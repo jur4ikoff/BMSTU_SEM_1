@@ -6,4 +6,7 @@ print(sp)
 ind = int(input('Введите индекс элемента: '))
 del_elem = sp.pop(ind)
 
-print(f'Список {sp}, удаленный элемент - {del_elem}')
+for i, val in enumerate(sp):
+    print(f"lst[{i}] = {val}")
+
+print(f'Удаленный элемент - {del_elem}')

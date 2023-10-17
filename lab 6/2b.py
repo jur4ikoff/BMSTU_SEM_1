@@ -13,4 +13,8 @@ for i in range(len(sp)):
     else:
         new_sp.append(sp[i])
 
-print(f'Список {new_sp}, удаленный элемент - {del_elem}')
+
+for i, val in enumerate(sp):
+    print(f"lst[{i}] = {val}")
+
+print(f'Удаленный элемент - {del_elem}')

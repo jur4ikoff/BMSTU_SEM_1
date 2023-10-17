@@ -11,4 +11,6 @@ for i in range(len(sp)):
         new_sp.append(elem)
     else:
         new_sp.append(sp[i])
-print(new_sp)
+
+for i, val in enumerate(sp):
+    print(f"lst[{i}] = {val}")
