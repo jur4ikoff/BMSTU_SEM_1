@@ -58,12 +58,11 @@ def make_table() -> list:
             draw_b_axis = True
 
         in_next_point = d1(cur_b + step)
-        deriv = (in_next_point - cur_b1) / step # производная
-
+        deriv = (in_next_point - cur_b1) / step  # производная
 
         if cur_b <= end_b + eps:  # Если текущий z меньше чем верхняя граница интервала
             if not (compl):  # Если на интервале нет комплексных чисел
-                print(f'|{i + 1:^25.6g}|{cur_b:^25.6g}|{cur_b1:^25.6g}|{cur_b2:^25.6g}|')
+                print(f'|{i + 1:^25.6g}|{cur_b:^25.6g}|{cur_b1:^25.6g}|{cur_b2:^25.6g}|{deriv}')
             else:
                 print(f'|{i + 1:^25.6g}|{cur_b:^25.6g}|{cur_b1:^25}|{cur_b2:^25}|')
             table.append((cur_b, cur_b1, deriv))
@@ -83,13 +82,18 @@ if not (4 <= serifs <= 8):  # проверка на колво засечек
     raise Exception('count of serifs must be in interval [4, 8]')
 
 # минимальный и максимальный элемент значения функции
-maxx = max(table, key=lambda x: x[1])[1]
-minn = min(table, key=lambda x: x[1])[1]
+maxx_y = max(table, key=lambda x: x[1])[1]
+minn_y = min(table, key=lambda x: x[1])[1]
+
+minn_d = min(table, key=lambda x: x[2])[2]
+maxx_d = max(table, key=lambda x: x[2])[2]
+
+minn, maxx = min(minn_y, minn_d), max(maxx_y, maxx_d)
+
 max_len_b = -1  # максимальная длина b
 for i in table:
     symb = format(i[0], '.6g')
     max_len_b = max(len(str(symb)), max_len_b)
-
 
 # Рисуем график
 step_point = (maxx - minn) / (serifs - 1)  # дельта между засечками
@@ -98,10 +102,10 @@ scale = size / (maxx - minn)  # числовой шаг между засечк�
 y_edge = 0  # граница y
 up_line = '  ' * (max_len_b - 1)  # верхняя строка
 for i in range(serifs):
-    y_value = minn + step_point * i # находим значение y
-    y_pos = round((y_value - minn) * scale) # ищем местонахождение значения на прямой
-    y_value = format(y_value, '.6g') # форматируем
-    up_line += ' ' * (y_pos - y_edge) + f'|{y_value}' # добавляем пробелы до нового значение и значение
+    y_value = minn + step_point * i  # находим значение y
+    y_pos = round((y_value - minn) * scale)  # ищем местонахождение значения на прямой
+    y_value = format(y_value, '.6g')  # форматируем
+    up_line += ' ' * (y_pos - y_edge) + f'|{y_value}'  # добавляем пробелы до нового значение и значение
     y_edge = y_pos + len(y_value) + 1
 
 print(up_line)
@@ -111,22 +115,33 @@ pos_b_axis = -2
 if draw_b_axis:
     pos_b_axis = round(size * (1 - maxx / (maxx - minn)))
 
-for b, y in table: # иттерируемся по таблице b, y
+for b, y, d in table:  # иттерируемся по таблице b, y
     b = format(b, ".6g")
     print(f"{b:>{max_len_b}}| ", end="")
-    if not draw_b_axis: # если нет отрицательных y
-        y_pos = round(size * ((y - minn) / (maxx - minn))) # позиция по y
-        print(" " * (y_pos - 1) + "*")
 
+    if y < 0:
+        y_pos = math.floor(pos_b_axis - pos_b_axis * (y / minn))
     else:
-        if y < 0:
-            y_pos = math.floor(pos_b_axis - pos_b_axis * (y / minn))
-            print(" " * y_pos + "*" + " " * (pos_b_axis - y_pos - 1) + "|")
-        elif y > 0:
-            y_pos = round((size - pos_b_axis) * (y / maxx))
-            print(" " * pos_b_axis + "|" + " " * y_pos + "*")
+        y_pos = round((size - pos_b_axis) * (y / maxx)) + pos_b_axis
+
+    if d < 0:
+        d_pos = math.floor(pos_b_axis - pos_b_axis * (d / minn))
+    else:
+        d_pos = round((size - pos_b_axis) * (d / maxx)) + pos_b_axis
+
+    for i in range(size + 1):
+        if i == pos_b_axis:
+            print('|', end='')
+        elif i == y_pos:
+            print('*', end='')
+        elif i == d_pos:
+            print('@', end='')
         else:
-            print(" " * pos_b_axis + "|")
+            print(' ', end='')
+    print()
+
+
+
 
 print(" " * (max_len_b + pos_b_axis + 2) + "|")
 print(" " * (max_len_b + pos_b_axis + 2) + "˅ b")
