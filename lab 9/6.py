@@ -1,6 +1,10 @@
 # Попов Юрий ИУ7-12Б
-# Дана матрица символов. Заменить в ней все гласные английские буквы на
-# точки. Напечатать матрицу до и после преобразования.
+# Сформировать матрицу C путём построчного перемножения матриц A и B
+# одинаковой размерности (элементы в i-й строке матрицы A умножаются на
+# соответствующие элементы в i-й строке матрицы B), потом сложить все
+# элементы в столбцах матрицы C и записать их в массив V. Напечатать матрицы
+# A, B, C и массив V.
+
 
 def input_matrix(n: int, name: str) -> list:
     """Ввод квадратной матрицы"""
@@ -37,19 +41,30 @@ def output_list(list, name: str):
     return output_string
 
 
-vowels = "aouei"
-len_d = int(input('Введите размер матрицы: '))
-matrix = input_matrix(len_d, 'matrix')
-print('До:')
-output_matrix(matrix, "matrix")
+n = int(input('Введите размер матриц A и B: '))
 
-for i in range(len(matrix)):
-    for j in range(len(matrix[0])):
-        try:
-            if matrix[i][j].lower() in vowels:
-                matrix[i][j] = "."
-        except AttributeError:
-            pass
+A = input_matrix(n, 'A')
+B = input_matrix(n, 'B')
+C = []
 
-print('После:')
-output_matrix(matrix, "matrix")
+for i in range(n):
+    d = []
+    for j in range(n):
+        d.append(A[i][j] * B[i][j])
+    C.append(d)
+
+V = []
+for i in range(n):
+    summ = 0
+    for j in range(n):
+        summ += C[j][i]
+    V.append(summ)
+
+
+output_matrix(A, "A")
+print()
+output_matrix(B, "B")
+print()
+output_matrix(C, "C")
+print()
+output_list(V, "V")

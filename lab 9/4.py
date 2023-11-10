@@ -18,7 +18,7 @@ def input_matrix(n: int, name: str) -> list:
 def input_lst(n: int, name: str) -> list:
     lst = []
     for i in range(n):
-        el = int(input(f'Введите {i + 1} элемент списка name: '))
+        el = int(input(f'Введите {i + 1} элемент списка {name}: '))
         lst.append(el)
 
     return lst
