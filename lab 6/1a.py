@@ -1,6 +1,6 @@
 import random
 
-sp = list(map(int, input('Введите список: ').split())) or [int(random.randint(0, 1000)) for _ in range(10)]
+sp = list(map(int, input('Введите список: ').split()))
 print(sp)
 
 
