@@ -9,6 +9,6 @@ while l < r:
     if height[l] <= height[r]:
         l += 1
     else:
-        r += 1
+        r -= 1
 
 print(res)
