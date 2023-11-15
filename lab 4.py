@@ -75,7 +75,7 @@ def make_table() -> list:
 
 table = make_table()
 print(f'Функция d2 меняет знак на заданном промежутке {change_sign:.6g} раз(а) \n')
-
+print(table)
 size = 120  # размер графика
 serifs = int(input('Введите количество засечек на оси Y (По умолчанию 8): ') or 8)
 
