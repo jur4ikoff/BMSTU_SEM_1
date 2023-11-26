@@ -17,14 +17,26 @@ def input_number(user_message, to_type: [int, float]) -> [int, float]:
 def input_lst(n=None, list_type=int):
     """Ввод списка"""
     if n == None:
-        n = input_number('Введите количество элементов в списке:', int)
+        n = input_number('Введите количество элементов в списке', int)
 
     list_of_numbers = []
     for i in range(n):
-        el = input_number(f'Введите {i} элемент списка', list_type)
+        el = input_number(f'Введите {i + 1} элемент списка', list_type)
         list_of_numbers.append(el)
 
     return list_of_numbers
+
+
+def output_list(lst, message="Вывод списка", n=None, lst_name='lst'):
+    if n == None:
+        n = len(lst)
+
+    str_to_output = ''
+    print(message)
+    for i in range(n):
+        str_to_output += (f"{lst_name}[{i}] = {lst[i]}\n")
+
+    return str_to_output
 
 
 def generate_list(n=None, left_border=0, right_border=100) -> list:
