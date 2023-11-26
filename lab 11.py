@@ -3,7 +3,7 @@
 # метод вставок с бинарным поиском
 import math
 import time
-from utils import input_number, input_lst
+from utils import input_number, input_lst, generate_list
 
 
 def input_data():
@@ -18,12 +18,20 @@ def make_table():
     pass
 
 
-def binary_sort():
-    pass
+def binary_sort(lst: list, n=None) -> list:
+    if n == None:
+        n = len(lst)
+
+
 
 
 def main():
     n1, n2, n3 = input_data()  # Ввод N
+    user_list = input_lst()
+
+    list1 = generate_list(n1, 0, 1000)
+    list2 = generate_list(n2, 0, 1000)
+    list3 = generate_list(n3, 0, 1000)
 
 
 if __name__ == '__main__':
