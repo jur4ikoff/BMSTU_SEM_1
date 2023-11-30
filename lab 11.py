@@ -37,6 +37,7 @@ def make_table(t1, t2, t3, t4, t5, t6, t7, t8, t9, k1, k2, k3, k4, k5, k6, k7, k
     print('—' * 105)
     return ""
 
+
 def binary_search(lst, el, low, high):
     while low <= high:
         mid = (low + high) // 2
@@ -96,6 +97,7 @@ def main():
     temp, t9, k9 = insertion_binary(list3)
 
     print(make_table(t1, t2, t3, t4, t5, t6, t7, t8, t9, k1, k2, k3, k4, k5, k6, k7, k8, k9))
+
 
 if __name__ == '__main__':
     main()

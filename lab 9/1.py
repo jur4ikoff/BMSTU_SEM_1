@@ -8,6 +8,7 @@
 # В AV записывать особое значение при отсутствии положительных элементов
 import math
 
+
 def lst_input(n: int) -> list:
     lst = []
     for i in range(n):
@@ -16,13 +17,13 @@ def lst_input(n: int) -> list:
 
     return lst
 
+
 def average(string):
     positive_only = [el for el in string if el >= 0]
     if positive_only:
         return sum(positive_only) / len(positive_only)
     else:
         return None
-
 
 
 lenn = int(input('Введите количество элементов в списке d: '))
@@ -54,5 +55,3 @@ for i in range(lenn):
 for i, line in enumerate(a):
     fmt = " ".join([f"{i:>8.6g}" for i in line])
     print(f"a[{i}] = {fmt}; {av[i]=}; {l[i]=}")
-
-
