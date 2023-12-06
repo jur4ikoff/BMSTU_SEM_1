@@ -1,24 +1,17 @@
-from functools import lru_cache
-
-
 def findRotateSteps(ring: str, key: str) -> int:
-    @lru_cache(None)
-    def dfs(ring: str, index: int) -> int:
-        if index == len(key):
+    dict = {}
+
+    def dp(i, j):
+        if (i, j) in dict:
+            return dict[(i, j)]
+        if j == len(key):
             return 0
+        ans = float('inf')
+        for k in range(len(ring)):
+            if ring[k] == key[j]:
+                steps = min(abs(k - i), len(ring) - abs(k - i))
+                ans = min(ans, steps + dp(k, j + 1))
+        dict[(i, j)] = ans
+        return ans
 
-        count = 10 ** 9
-
-        for i, r in enumerate(ring):
-            if r == key[index]:
-                minRotates = min(i, len(ring) - i)
-                newRing = ring[i:] + ring[:i]
-                remainingRotates = dfs(newRing, index + 1)
-                count = min(count, minRotates + remainingRotates)
-
-        return count
-
-    return dfs(ring, 0) + len(key)
-
-
-print(findRotateSteps('nyngl', 'yyynnnnnnlllggg'))
+    return dp(0, 0) + len(key)
