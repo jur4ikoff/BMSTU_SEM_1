@@ -1,7 +1,8 @@
 import collections
+
+
 def findRotateSteps(ring: str, key: str) -> int:
     char_pos = collections.defaultdict(set)
-
     for i, c in enumerate(ring):
         char_pos[c].add(i)
 
@@ -14,6 +15,7 @@ def findRotateSteps(ring: str, key: str) -> int:
     dp = [0] * len(ring)
     for p in char_pos[key[0]]:
         dp[p] = minstep(0, p)
+
     prev_char = key[0]
     for c in key[1:]:
         for next_pos in char_pos[c]:
@@ -23,4 +25,4 @@ def findRotateSteps(ring: str, key: str) -> int:
     return min(dp[p] for p in char_pos[prev_char]) + len(key)
 
 
-print(findRotateSteps('godding', 'godding'))
+print(findRotateSteps('godding', 'gdn'))
