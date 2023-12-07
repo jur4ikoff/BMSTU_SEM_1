@@ -72,7 +72,10 @@ def append_db(file: str, to_append: str):
 
 
 def search_one_field(file: str, data: str):
+    pass
 
+def search_two_field(file: str, data: str):
+    pass
 
 def main():
     db_name = find_database()
@@ -89,8 +92,11 @@ def main():
             print('Измененная БД')
             print_database(db_name)
         elif command == 4:
-
-
+            data = input('Введите элемент для поиска: ')
+            search_one_field(db_name, data)
+        elif command == 5:
+            data = input('Введите элемент для поиска: ')
+            search_two_field(db_name, data)
         elif command == 6:
             print('Программа завершилась успешно')
             exit(1)
