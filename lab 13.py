@@ -72,10 +72,31 @@ def append_db(file: str, to_append: str):
 
 
 def search_one_field(file: str, data: str):
-    pass
+    with open(file=file) as f:
+        while True:
+            line = f.readline().strip()
+            if not line:
+                break
+            string = line.split(DELIMITER)
+            if data in string:
+                return line
+
 
 def search_two_field(file: str, data: str):
-    pass
+    with open(file=file) as f:
+        data = data.split(DELIMITER)
+        while True:
+            line = f.readline().strip()
+            if not line:
+                break
+            string = line.split(DELIMITER)
+            count = 0
+            for el in data:
+                if el in string:
+                    count += 1
+            if count == len(data) - 1:
+                return line
+
 
 def main():
     db_name = find_database()
@@ -93,10 +114,10 @@ def main():
             print_database(db_name)
         elif command == 4:
             data = input('Введите элемент для поиска: ')
-            search_one_field(db_name, data)
+            print(search_one_field(db_name, data))
         elif command == 5:
-            data = input('Введите элемент для поиска: ')
-            search_two_field(db_name, data)
+            data = input('Введите 2 элемента для поиска через ; : ')
+            print(search_two_field(db_name, data))
         elif command == 6:
             print('Программа завершилась успешно')
             exit(1)
@@ -104,5 +125,7 @@ def main():
             raise UnexpectedException
 
 
+print(search_two_field('dasda.db', 'adadsad;sadad'))
 if __name__ == '__main__':
+    pass
     main()
