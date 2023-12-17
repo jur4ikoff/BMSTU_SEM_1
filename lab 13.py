@@ -124,8 +124,6 @@ def main():
         else:
             raise UnexpectedException
 
-
-print(search_two_field('dasda.db', 'adadsad;sadad'))
 if __name__ == '__main__':
     pass
     main()
