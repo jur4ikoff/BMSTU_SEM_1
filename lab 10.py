@@ -14,6 +14,17 @@ def right_rectangles(func, start, finish, N):
     result = 0
     for i in range(N):
         result += func((i + 1) * step + start) * step
+        result += func((i * step + (i + 1) * step) / 2 + start) * step
+    return result
+
+
+def middle_rectangles(func, start, finish, N):
+    """Серединных прямоугольников"""
+    step = (finish - start) / N
+    result = 0
+    for i in range(N):
+        result += func((i * step + (i + 1) * step) / 2 + start) * step
+
     return result
 
 
@@ -72,6 +83,7 @@ def main():
 
     make_table('Метод 1', 'Метод 2', i1, i2, i3, i4, 'N1', 'N2')
     print()
+    print(middle_rectangles(func, start, stop, n2))
 
     if abs(absolute_error(i2, real_value)) > abs(absolute_error(i4, real_value)):
         print(f'Метод трапеции более точный чем метод прямоугольников')
