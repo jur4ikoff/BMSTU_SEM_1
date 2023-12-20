@@ -12,6 +12,7 @@ import struct
 
 FORMAT = "<h255sh"
 
+# Скачать bin ed
 
 class UnexpectedException(Exception):
     """Неожиданная ошибка"""
