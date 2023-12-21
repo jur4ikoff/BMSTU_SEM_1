@@ -10,9 +10,9 @@ data = ['Дорожные размышления мои были не очень
         'симбирском трактире было глупо, и чувствовал трактире себя виноватым перед Савельичем. Все это меня мучило.',
         'Старик угрюмо сидел на облучке, отворотясь от меня, и молчал, изредка только покрякивая. Я непременно хотел с',
         'ним помириться и не знал с чего начать. Наконец я сказал ему: «Ну, ну, Савельич! полно, помиримся, виноват;',
-        'вижу сам, что виноват. Я вчера напроказил, а тебя напрасно обидел. Обещаюсь вперед вести себя умнее и',
-        'слушаться тебя. Ну, не сердись; помиримся».',
-        'Эх, батюшка Петр Андреич! — отвечал он с глубоким вздохом. — Сержусь-то я на самого себя;',
+        'вижу', 'сам, что виноват. Я вчера напроказил, а тебя напрасно обидел. Обещаюсь вперед вести себя умнее и',
+        'слушаться тебя. Ну, не сердись; помиримся».', 'Я на рав тест вапап вфролы',
+        'Эх, батюшка Петр Андреич! — отвечал он с глубоким вздохом. — Сержусь-то я на самого себя.',
         'сам я кругом виноват. Как мне было оставлять тебя одного в трактире! Что делать?',
         'Грех попутал: вздумал забрести к дьячихе, 5 + 5 повидаться с кумою.']
 
@@ -40,7 +40,27 @@ def align_print(lst, align=None):
             string_len = len(lst[i])
             string += f'{" " * ((size - string_len) // 2) + str(lst[i]) + " " * ((size - string_len) // 2)}\n'
             continue
+        elif align == 'center':
+            el = lst[i]
+            if len(el) == size:
+                string += el + '\n'
+            elif len(el.split()) == 1:
+                tabs = (size - len(el)) // 2
+                string += ' ' * tabs + el + ' ' * tabs + '\n'
 
+            else:
+                try:
+                    tabs = (size - len(el)) // (len(el.split()) - 2)
+                except Exception:
+                    tabs = 0
+                try:
+                    temp_string = el.split()[0] + ' '
+                    for j in range(1, len(el.split()) - 1):
+                        temp_string += el.split()[j] + ' ' * (tabs + 1)
+                    temp_string += (size - len(temp_string) - len(el.split()[-1])) * ' ' + el.split()[-1]
+                    string += temp_string + '\n'
+                except IndexError:
+                    pass
     return string
 
 
@@ -126,7 +146,37 @@ def ask_menu():
 
     return command
 
+def find_propose(lst):
+    max_count, index = 0, 0
+    proposals = []
+    output = ''
+    for i in range(len(lst)):
+        proposal = lst[i].split('.')
+        proposals += proposal
 
+    for i in range(len(proposals)):
+        temp_count = check_chain(proposals[i])
+        if temp_count > max_count:
+            max_count = temp_count
+            output = proposals[i]
+
+    return f"Предложение с наибольшей цепочкой возрастающей последовательности: {output}.\nДлина - цепочки {max_count}"
+
+
+
+def check_chain(string):
+    string = string.replace(',', '').replace('.', '').replace('!', '').replace('?', '')
+    elements = string.split()
+    max_count = 1
+    count = 1
+    for i in range(1, len(elements)):
+        if len(elements[i]) > len(elements[i - 1]):
+            count += 1
+        else:
+            max_count = max(max_count, count)
+            count = 1
+    max_count = max(max_count, count)
+    return max_count
 def main():
     align = 'l'
     while True:
@@ -138,8 +188,8 @@ def main():
             print(align_print(data, 'r'))
             align = 'r'
         elif command == 3:
-            print(align_print(data, 'c'))
-            align = 'c'
+            print(align_print(data, 'center'))
+            align = 'center'
         elif command == 4:
             replace_word(data, align, command)
         elif command == 5:
@@ -154,4 +204,7 @@ def main():
 
 
 if __name__ == '__main__':
+    print(find_propose(data))
     main()
+
+# предл макс возраст цепочка длины слов
